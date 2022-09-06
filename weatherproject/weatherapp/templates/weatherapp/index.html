@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather app</title>
+    <meta name="description" content="description"/>
+    <meta name="author" content="author" />
+    <meta name="keywords" content="keywords" />
+    <link rel="stylesheet" href="{% static 'style.css' %}" type="text/css" />
+  </head>
+
+  <body>
+
+    <div class="container">
+        <form method="POST">
+            {% csrf_token %}
+          <input type="text" name="city" placeholder="Enter City" required>
+          <button type="submit" >Enter</button>
+        </form>
+        <div class="weather">
+          <div class="left">
+            <h2>{{temp}} &deg;</h2>
+            <h3>{{city}}</h3>
+          </div>
+          <div class="right">
+            <div class="icon">
+              <p><img src="https://api.openweathermap.org/img/w/{{icon}}.png" width="100px"/></p>
+            </div>
+            <div class="condition">
+              <p>{{description}}</p>
+              <p>{{day}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <h1 align="center">Latest Alerts</h1>
+      <div align="center">
+        <table border="1">
+    
+            <tr>
+                <th>Sl No.</th>
+                <th>Log id</th>
+                <th>City</th>
+                <th>Temp</th>
+                <th>Desc</th>
+                <th>Date & Time</th>
+            </tr>
+            {% for lg in logs %}
+            <tr>
+              <td>{{forloop.counter}}</td>
+              <td>{{lg.id}} </td>
+              <td>{{lg.alertcity}} </td>
+              <td>{{lg.temp}}</td>
+              <td>{{lg.desc}}</td>
+              <td>{{lg.created_at}}</td>
+          </tr>
+          {% endfor %}
+        </table>
+      
+    </div>
+    
+    
+  </body>
+</html>
